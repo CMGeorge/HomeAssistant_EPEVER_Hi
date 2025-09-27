@@ -38,13 +38,20 @@ This integration provides access to solar panel data, battery monitoring, charge
 3. Choose category: **Integration**
 4. Install and restart Home Assistant
 
-### Option 2: Direct Repository Installation
+### Option 2: Central Repository Installation (New!)
+Add the central repository for all George Călugăr integrations:
+
+1. **Add Repository**: `https://github.com/CMGeorge/ha_repository`
+2. **Access Multiple Integrations**: Get EPEVER Hi, Sabiana Smart Energy, and future integrations
+3. **One-Stop Installation**: Central location for all integrations
+
+### Option 3: Direct Repository Installation
 You can add this repository directly to Home Assistant as an integration repository:
 
 1. **Via Repository URL**: Add `https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi` as a custom integration repository
 2. **Via repository.json**: This repository provides a `repository.json` file for direct integration installation
 
-### Option 3: Automated Installation Script
+### Option 4: Automated Installation Script
 Use the provided installation scripts for automatic setup:
 
 **Bash script (Linux/macOS):**
@@ -69,7 +76,7 @@ wget https://raw.githubusercontent.com/CMGeorge/HomeAssistant_EPEVER_Hi/main/ins
 python3 install.py
 ```
 
-### Option 4: Manual Installation
+### Option 5: Manual Installation
 1. Clone or download this repository: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi
 2. Copy the `custom_components/epever_hi` folder to: `config/custom_components/epever_hi`
 3. Restart Home Assistant
@@ -209,6 +216,7 @@ This repository supports multiple installation methods:
 
 ## 🔗 Installation URLs
 
+- **Central Repository**: https://github.com/CMGeorge/ha_repository (All integrations)
 - **HACS Repository**: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi
 - **Direct Download**: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/archive/main.zip
 - **Latest Release**: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/releases/latest
