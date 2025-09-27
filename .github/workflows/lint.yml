@@ -23,7 +23,7 @@ jobs:
           cache: "pip"
 
       - name: "Install requirements"
-        run: python3 -m pip install ruff
+        run: python3 -m pip install -r requirements.txt
 
       - name: "Lint"
         run: python3 -m ruff check .
