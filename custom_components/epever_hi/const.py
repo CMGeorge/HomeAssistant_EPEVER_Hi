@@ -448,7 +448,10 @@ DIAGNOSTIC_DEFINITIONS = {
             2: {"key": "charging_equalizing", "name": "Charging Equalizing"},
             3: {"key": "charging_boost", "name": "Charging Boost"},
             4: {"key": "charging_float", "name": "Charging Float"},
-            5: {"key": "charging_current_limiting", "name": "Charging Current Limiting"},
+            5: {
+                "key": "charging_current_limiting",
+                "name": "Charging Current Limiting",
+            },
         },
     },
     0x3201: {
@@ -463,7 +466,10 @@ DIAGNOSTIC_DEFINITIONS = {
             5: {"key": "load_over_current", "name": "Load Over Current"},
             6: {"key": "battery_over_discharge", "name": "Battery Over Discharge"},
             7: {"key": "battery_over_voltage", "name": "Battery Over Voltage"},
-            8: {"key": "battery_under_voltage_warning", "name": "Battery Under Voltage Warning"},
+            8: {
+                "key": "battery_under_voltage_warning",
+                "name": "Battery Under Voltage Warning",
+            },
         },
     },
 }
