@@ -38,10 +38,40 @@ This integration provides access to solar panel data, battery monitoring, charge
 3. Choose category: **Integration**
 4. Install and restart Home Assistant
 
-### Option 2: Manual
-1. Clone or download this repository: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi
-2. Copy the folder to: config/custom_components/epever_hi
+### Option 2: Direct Repository Installation
+You can add this repository directly to Home Assistant as an integration repository:
 
+1. **Via Repository URL**: Add `https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi` as a custom integration repository
+2. **Via repository.json**: This repository provides a `repository.json` file for direct integration installation
+
+### Option 3: Automated Installation Script
+Use the provided installation scripts for automatic setup:
+
+**Bash script (Linux/macOS):**
+```bash
+curl -sSL https://raw.githubusercontent.com/CMGeorge/HomeAssistant_EPEVER_Hi/main/install.sh | bash
+```
+
+**Python script (Cross-platform):**
+```bash
+curl -sSL https://raw.githubusercontent.com/CMGeorge/HomeAssistant_EPEVER_Hi/main/install.py | python3
+```
+
+**Manual script download:**
+```bash
+# Download and run bash script
+wget https://raw.githubusercontent.com/CMGeorge/HomeAssistant_EPEVER_Hi/main/install.sh
+chmod +x install.sh
+./install.sh
+
+# Or download and run Python script
+wget https://raw.githubusercontent.com/CMGeorge/HomeAssistant_EPEVER_Hi/main/install.py
+python3 install.py
+```
+
+### Option 4: Manual Installation
+1. Clone or download this repository: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi
+2. Copy the `custom_components/epever_hi` folder to: `config/custom_components/epever_hi`
 3. Restart Home Assistant
 
 ---
@@ -156,13 +186,43 @@ tests/
 
 **Note**: These tests are designed to work without a full Home Assistant installation, focusing on static analysis, syntax validation, and structure verification.
 
-📚 Modbus Register Map
+---
+
+## 📂 Repository Structure
+
+This repository supports multiple installation methods:
+
+- **HACS Integration**: Uses `hacs.json` and `info.md` for HACS compatibility
+- **Direct Repository**: Provides `repository.json` for direct Home Assistant integration installation
+- **Automated Scripts**: Includes `install.sh` and `install.py` for one-command installation
+- **Manual Installation**: Traditional copy-paste method
+
+### Repository Files:
+- `repository.json` - Metadata for direct Home Assistant repository support
+- `install.sh` - Bash installation script  
+- `install.py` - Python installation script (cross-platform)
+- `hacs.json` - HACS integration metadata
+- `info.md` - Integration description for HACS
+- `custom_components/epever_hi/` - The actual integration code
+
+---
+
+## 🔗 Installation URLs
+
+- **HACS Repository**: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi
+- **Direct Download**: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/archive/main.zip
+- **Latest Release**: https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/releases/latest
+- **Repository JSON**: https://raw.githubusercontent.com/CMGeorge/HomeAssistant_EPEVER_Hi/main/repository.json
+
+---
+
+## 📚 Modbus Register Map
 
 This integration is based on EPEVER Hi official Modbus documentation.
 You can find/extend register definitions in: custom_components/epever_hi/const.py
 
 
-📜 License
+## 📜 License
 
 MIT License © George Călugăr
 Not affiliated with EPEVER Co., Ltd.
