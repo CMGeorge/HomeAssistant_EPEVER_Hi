@@ -125,9 +125,7 @@ def test_repository_compatibility():
     assert (base_dir / "install.sh").exists()
     assert (base_dir / "install.py").exists()
 
-    # Check ha_repository files
-    assert (base_dir / "ha_repository_README.md").exists()
-    assert (base_dir / "ha_repository_repository.json").exists()
+    # Check setup documentation
     assert (base_dir / "HA_REPOSITORY_SETUP.md").exists()
 
     # Check integration files
@@ -158,45 +156,14 @@ def test_urls_consistency():
     assert manifest_data["issue_tracker"] == f"{expected_repo_url}/issues"
 
 
-def test_ha_repository_files_exist():
-    """Test that ha_repository setup files exist."""
+def test_setup_documentation_exists():
+    """Test that setup documentation exists for the central repository."""
     base_dir = Path(__file__).parent.parent
 
-    # Check ha_repository files
-    assert (base_dir / "ha_repository_README.md").exists(), (
-        "ha_repository_README.md does not exist"
-    )
-    assert (base_dir / "ha_repository_repository.json").exists(), (
-        "ha_repository_repository.json does not exist"
-    )
+    # Check setup documentation
     assert (base_dir / "HA_REPOSITORY_SETUP.md").exists(), (
-        "HA_REPOSITORY_SETUP.md does not exist"
+        "HA_REPOSITORY_SETUP.md should exist for setup instructions"
     )
-
-
-def test_ha_repository_json_structure():
-    """Test that the ha_repository repository.json has correct structure for multiple integrations."""
-    base_dir = Path(__file__).parent.parent
-    repo_json_path = base_dir / "ha_repository_repository.json"
-
-    assert repo_json_path.exists(), "ha_repository_repository.json does not exist"
-
-    with open(repo_json_path, encoding="utf-8") as f:
-        repo_data = json.load(f)
-
-    # Should have multiple integrations
-    assert len(repo_data["integrations"]) >= 2, "Should have at least 2 integrations"
-
-    # Check for both expected integrations
-    domains = [integration["domain"] for integration in repo_data["integrations"]]
-    assert "epever_hi" in domains, "EPEVER Hi integration should be present"
-    assert "sabiana_smart_energy" in domains, (
-        "Sabiana Smart Energy integration should be present"
-    )
-
-    # Validate structure
-    assert repo_data["name"] == "George Călugăr's Home Assistant Integrations"
-    assert "ha_repository" in repo_data["url"]
 
 
 def test_readme_mentions_central_repository():
