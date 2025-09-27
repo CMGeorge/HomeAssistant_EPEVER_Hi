@@ -1,0 +1,31 @@
+{
+  "name": "EPEVER Hi Integration Repository",
+  "url": "https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi",
+  "maintainer": "George Călugăr (@cmgeorge)",
+  "description": "Custom integration repository for EPEVER Hi solar charge controllers with Modbus RTU/TCP support. Compatible with Home Assistant integration installation.",
+  "version": "1.0.0",
+  "author": "George Călugăr",
+  "homepage": "https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi",
+  "documentation": "https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/blob/main/README.md",
+  "issue_tracker": "https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/issues",
+  "repository_type": "integration",
+  "integrations": [
+    {
+      "name": "EPEVER Hi",
+      "description": "Monitor and control EPEVER Hi solar charge controllers via Modbus RTU or TCP",
+      "domain": "epever_hi",
+      "version": "1.0.0",
+      "documentation": "https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi",
+      "issue_tracker": "https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/issues",
+      "codeowners": ["@cmgeorge"],
+      "iot_class": "local_polling",
+      "config_flow": true,
+      "integration_type": "hub",
+      "requirements": ["pymodbus>=3.0.0"],
+      "dependencies": ["modbus"],
+      "download_url": "https://github.com/CMGeorge/HomeAssistant_EPEVER_Hi/archive/main.zip",
+      "zip_release": true,
+      "filename": "epever_hi.zip"
+    }
+  ]
+}

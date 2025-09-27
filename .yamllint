@@ -1,5 +1,8 @@
 extends: default
 
+ignore: |
+  repository.json
+
 rules:
   document-start: disable
   indentation:
