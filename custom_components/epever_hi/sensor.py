@@ -28,10 +28,11 @@ async def async_setup_entry(
     coordinator = hass.data[DOMAIN][entry.entry_id]
     sensors = []
     for definition in SENSOR_DEFINITIONS:
-        coordinator.register_address(definition["address"])
+        reg_type = definition.get("register_type", "holding")
+        coordinator.register_address(definition["address"], reg_type)
         if definition.get("type") == "float32":
             # For float32, we need to register both high and low addresses
-            coordinator.register_address(definition["address"] + 1)
+            coordinator.register_address(definition["address"] + 1, reg_type)
         sensors.append(EpeverHiModbusSensor(coordinator, definition, entry.entry_id))
     #     EpeverHiModbusSensor(coordinator, definition, entry.entry_id)
     #     for definition in SENSOR_DEFINITIONS:

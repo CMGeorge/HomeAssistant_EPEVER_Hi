@@ -4,6 +4,8 @@ from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "epever_hi"
 CONF_SLAVE = "slave"
+CONF_CONNECTION_TYPE = "connection_type"
+CONF_REGISTER_TYPE = "register_type"
 
 LOGGER = logging.getLogger(__package__)
 
@@ -20,6 +22,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "voltage",
         "readable": True,
+        "register_type": "input",  # Input registers (function code 0x04)
     },
     0x3501: {
         "key": "grid_current",
@@ -29,6 +32,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "current",
         "readable": True,
+        "register_type": "input",  # Input registers (function code 0x04)
     },
     0x3511: {
         "key": "grid_state",

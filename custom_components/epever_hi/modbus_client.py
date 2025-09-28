@@ -2,6 +2,7 @@ import logging
 
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ModbusException
+from pymodbus.framer import FramerType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -13,18 +14,25 @@ _PYMODBUS_LOGGER.setLevel(logging.WARNING)
 class EpeverHiModbusClient:
     """Handles persistent async Modbus TCP communication for EPEVER Hi devices."""
 
-    def __init__(self, host: str, port: int) -> None:
+    def __init__(self, host: str, port: int, framer: str = "tcp") -> None:
         self.host = host
         self.port = port
+        self.framer = framer
         self.client: AsyncModbusTcpClient | None = None
 
     async def ensure_connected(self) -> bool:
         """Ensure the Modbus client is connected, reconnect if needed."""
         if self.client is None:
+            # Choose framer based on configuration
+            framer_type = (
+                FramerType.RTU if self.framer.lower() == "rtu" else FramerType.SOCKET
+            )
+
             # Configure client with reduced retries to minimize verbose logging
             self.client = AsyncModbusTcpClient(
                 self.host,
                 port=self.port,
+                framer=framer_type,
                 timeout=2.0,  # Shorter timeout to fail faster
                 retries=1,  # Fewer retries to reduce log noise
             )
@@ -34,9 +42,10 @@ class EpeverHiModbusClient:
                 connected = await self.client.connect()
                 if not connected:
                     _LOGGER.error(
-                        "Failed to connect to Modbus server at %s:%s",
+                        "Failed to connect to Modbus server at %s:%s (framer: %s)",
                         self.host,
                         self.port,
+                        self.framer,
                     )
                     return False
             except Exception as e:
@@ -46,18 +55,37 @@ class EpeverHiModbusClient:
         return True
 
     async def read_register(
-        self, address: int, count: int = 1, slave: int = 1
+        self,
+        address: int,
+        count: int = 1,
+        slave: int = 1,
+        register_type: str = "holding",
     ) -> list[int] | None:
-        """Read holding registers from Modbus server."""
+        """Read registers from Modbus server.
+
+        Args:
+            address: Register address to read
+            count: Number of registers to read
+            slave: Slave device ID
+            register_type: Type of register - "holding" or "input"
+        """
         if not await self.ensure_connected():
             return None
 
         try:
-            result = await self.client.read_holding_registers(
-                address=address, count=count, device_id=slave
-            )
+            if register_type.lower() == "input":
+                result = await self.client.read_input_registers(
+                    address=address, count=count, device_id=slave
+                )
+            else:
+                result = await self.client.read_holding_registers(
+                    address=address, count=count, device_id=slave
+                )
+
             if result is None or result.isError():
-                _LOGGER.warning("Read failed at address 0x%04X", address)
+                _LOGGER.warning(
+                    "Read failed at address 0x%04X (type: %s)", address, register_type
+                )
                 return None
             return result.registers
         except ModbusException as me:
