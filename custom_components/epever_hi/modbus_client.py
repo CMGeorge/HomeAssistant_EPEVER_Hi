@@ -5,6 +5,10 @@ from pymodbus.exceptions import ModbusException
 
 _LOGGER = logging.getLogger(__name__)
 
+# Configure pymodbus logging to reduce verbose retry messages
+_PYMODBUS_LOGGER = logging.getLogger("pymodbus.logging")
+_PYMODBUS_LOGGER.setLevel(logging.WARNING)
+
 
 class EpeverHiModbusClient:
     """Handles persistent async Modbus TCP communication for EPEVER Hi devices."""
@@ -17,7 +21,13 @@ class EpeverHiModbusClient:
     async def ensure_connected(self) -> bool:
         """Ensure the Modbus client is connected, reconnect if needed."""
         if self.client is None:
-            self.client = AsyncModbusTcpClient(self.host, port=self.port)
+            # Configure client with reduced retries to minimize verbose logging
+            self.client = AsyncModbusTcpClient(
+                self.host,
+                port=self.port,
+                timeout=2.0,  # Shorter timeout to fail faster
+                retries=1     # Fewer retries to reduce log noise
+            )
 
         if not self.client.connected:
             try:
