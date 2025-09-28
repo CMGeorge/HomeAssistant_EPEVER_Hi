@@ -26,17 +26,17 @@ def test_modbus_client_import_available():
         "..",
         "custom_components",
         "epever_hi",
-        "modbus_client.py"
+        "modbus_client.py",
     )
 
-    with open(modbus_client_path, encoding='utf-8') as f:
+    with open(modbus_client_path, encoding="utf-8") as f:
         content = f.read()
 
     # Parse to ensure valid syntax
     ast.parse(content)
 
     # Check that logging configuration is present
-    assert "_PYMODBUS_LOGGER = logging.getLogger(\"pymodbus.logging\")" in content
+    assert '_PYMODBUS_LOGGER = logging.getLogger("pymodbus.logging")' in content
     assert "_PYMODBUS_LOGGER.setLevel(logging.WARNING)" in content
 
     # Check that timeout and retries parameters are used
