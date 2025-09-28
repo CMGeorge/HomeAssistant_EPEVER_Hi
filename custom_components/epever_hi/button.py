@@ -39,7 +39,8 @@ async def async_setup_entry(
     buttons = []
     for address, props in BUTTON_DEFINITIONS.items():
         if props.get("entity_type") == "button":
-            coordinator.register_address(address)
+            reg_type = props.get("register_type", "holding")
+            coordinator.register_address(address, reg_type)
             buttons.append(
                 EpeverHiButton(
                     coordinator, {**props, "address": address}, entry.entry_id

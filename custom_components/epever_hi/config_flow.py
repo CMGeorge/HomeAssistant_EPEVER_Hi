@@ -5,7 +5,7 @@ from homeassistant.const import CONF_HOST, CONF_NAME, CONF_PORT
 from homeassistant.data_entry_flow import FlowResult
 import voluptuous as vol
 
-from .const import CONF_SLAVE, DOMAIN
+from .const import CONF_CONNECTION_TYPE, CONF_REGISTER_TYPE, CONF_SLAVE, DOMAIN
 
 
 class EpeverHiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -36,6 +36,12 @@ class EpeverHiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Required(CONF_HOST): str,
                     vol.Required(CONF_PORT, default=502): int,
                     vol.Required(CONF_SLAVE, default=1): int,
+                    vol.Required(CONF_CONNECTION_TYPE, default="tcp"): vol.In(
+                        ["tcp", "rtu"]
+                    ),
+                    vol.Required(CONF_REGISTER_TYPE, default="holding"): vol.In(
+                        ["holding", "input"]
+                    ),
                 }
             ),
             errors=self._errors,

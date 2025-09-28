@@ -63,7 +63,8 @@ async def async_setup_entry(
 
     for address, props in SWITCH_DEFINITIONS.items():
         if props.get("entity_type") == "switch":
-            coordinator.register_address(address)
+            reg_type = props.get("register_type", "holding")
+            coordinator.register_address(address, reg_type)
             switches.append(
                 EpeverHiSwitch(
                     coordinator, {**props, "address": address}, entry.entry_id

@@ -22,13 +22,21 @@ class EpeverHiModbusCoordinator(DataUpdateCoordinator):
         self._host = config["host"]
         self._port = config["port"]
         self._slave = config["slave"]
-        self._client = EpeverHiModbusClient(self._host, self._port)
-        self._active_addresses: set[int] = set()
+        self._connection_type = config.get("connection_type", "tcp")
+        self._register_type = config.get("register_type", "holding")
+        self._client = EpeverHiModbusClient(
+            self._host, self._port, framer=self._connection_type
+        )
+        self._active_addresses: dict[int, str] = {}  # address -> register_type mapping
 
-    def register_address(self, address: int) -> None:
-        """Register a Modbus address to be polled."""
-        self._active_addresses.add(address)
-        LOGGER.debug("Registered address 0x%04X for polling", address)
+    def register_address(self, address: int, register_type: str = None) -> None:
+        """Register a Modbus address to be polled with its register type."""
+        # Use global register_type from config as default, or specific per address
+        reg_type = register_type or self._register_type
+        self._active_addresses[address] = reg_type
+        LOGGER.debug(
+            "Registered address 0x%04X for polling (type: %s)", address, reg_type
+        )
 
     async def async_setup(self) -> None:
         """Connect the Modbus client."""
@@ -70,15 +78,17 @@ class EpeverHiModbusCoordinator(DataUpdateCoordinator):
         """Poll only the registered Modbus addresses."""
         results: dict[int, int | None] = {}
 
-        for addr in self._active_addresses:
+        for addr, reg_type in self._active_addresses.items():
             try:
                 value = await self._client.read_register(
-                    address=addr, count=1, slave=self._slave
+                    address=addr, count=1, slave=self._slave, register_type=reg_type
                 )
                 results[addr] = value[0] if value else None
-                LOGGER.debug("Read 0x%04X → %s", addr, results[addr])
+                LOGGER.debug("Read 0x%04X (%s) → %s", addr, reg_type, results[addr])
             except Exception as err:
-                LOGGER.error("Error reading register 0x%04X: %s", addr, err)
+                LOGGER.error(
+                    "Error reading register 0x%04X (%s): %s", addr, reg_type, err
+                )
                 results[addr] = None
 
         return results
