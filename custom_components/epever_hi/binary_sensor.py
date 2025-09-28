@@ -24,8 +24,9 @@ async def async_setup_entry(
 
     for addr, reg in DIAGNOSTIC_DEFINITIONS.items():
         entity_category = reg.get("entity_category", None)
+        reg_type = reg.get("register_type", "holding")
         for bit_num, bit_def in reg.get("bits", {}).items():
-            coordinator.register_address(addr)
+            coordinator.register_address(addr, reg_type)
             sensors.append(
                 EpeverHiBinarySensor(
                     coordinator=coordinator,

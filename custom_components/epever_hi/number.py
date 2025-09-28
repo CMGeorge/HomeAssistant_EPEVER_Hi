@@ -57,7 +57,8 @@ async def async_setup_entry(
     entities: list[EpeverHiNumberEntity] = []
 
     for reg in NUMBER_DEFINITIONS:
-        coordinator.register_address(reg["address"])
+        reg_type = reg.get("register_type", "holding")
+        coordinator.register_address(reg["address"], reg_type)
         entities.append(EpeverHiNumberEntity(coordinator, reg, entry.entry_id))
 
     async_add_entities(entities)

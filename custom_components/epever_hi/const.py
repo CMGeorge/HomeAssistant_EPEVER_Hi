@@ -41,6 +41,7 @@ SENSOR_DEFINITIONS_NEW = {
         "scale": 1,
         "precision": 0,
         "readable": True,
+        "register_type": "input",
     },
     0x350F: {
         "key": "grid_total",
@@ -52,6 +53,7 @@ SENSOR_DEFINITIONS_NEW = {
         "data_type": "int32",
         "swap": "word",
         "readable": True,
+        "register_type": "input",
     },
     # PV Array sensors
     0x3549: {
@@ -62,6 +64,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "voltage",
         "readable": True,
+        "register_type": "input",
     },
     0x354A: {
         "key": "pv_current",
@@ -71,6 +74,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "current",
         "readable": True,
+        "register_type": "input",
     },
     0x354B: {
         "key": "pv_power",
@@ -82,6 +86,7 @@ SENSOR_DEFINITIONS_NEW = {
         "data_type": "int32",
         "swap": "word",
         "readable": True,
+        "register_type": "input",
     },
     0x3557: {
         "key": "pv_total",
@@ -93,6 +98,7 @@ SENSOR_DEFINITIONS_NEW = {
         "data_type": "int32",
         "swap": "word",
         "readable": True,
+        "register_type": "input",
     },
     # Load sensors
     0x3521: {
@@ -103,6 +109,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "voltage",
         "readable": True,
+        "register_type": "input",
     },
     0x3522: {
         "key": "load_current",
@@ -112,6 +119,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "current",
         "readable": True,
+        "register_type": "input",
     },
     0x3530: {
         "key": "load_total",
@@ -123,6 +131,7 @@ SENSOR_DEFINITIONS_NEW = {
         "data_type": "int32",
         "swap": "word",
         "readable": True,
+        "register_type": "input",
     },
     # Battery sensors
     0x3580: {
@@ -133,6 +142,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "voltage",
         "readable": True,
+        "register_type": "input",
     },
     0x3581: {
         "key": "battery_current",
@@ -142,6 +152,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "current",
         "readable": True,
+        "register_type": "input",
     },
     0x3586: {
         "key": "battery_capacity",
@@ -151,6 +162,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 0,
         "device_class": "battery",
         "readable": True,
+        "register_type": "input",
     },
     0x3512: {
         "key": "battery_temp",
@@ -160,6 +172,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "temperature",
         "readable": True,
+        "register_type": "input",
     },
     0x3589: {
         "key": "battery_state",
@@ -168,6 +181,7 @@ SENSOR_DEFINITIONS_NEW = {
         "scale": 1,
         "precision": 0,
         "readable": True,
+        "register_type": "input",
     },
     0x3533: {
         "key": "inverter_temp",
@@ -177,6 +191,7 @@ SENSOR_DEFINITIONS_NEW = {
         "precision": 2,
         "device_class": "temperature",
         "readable": True,
+        "register_type": "input",
     },
 }
 
@@ -193,6 +208,7 @@ REGISTER_DEFINITIONS = {
         "max": 7,
         "readable": True,
         "writable": True,
+        "register_type": "holding",
     },
     0x9001: {
         "key": "battery_capacity",
@@ -204,6 +220,7 @@ REGISTER_DEFINITIONS = {
         "max": 1000,
         "readable": True,
         "writable": True,
+        "register_type": "holding",
     },
     0x9002: {
         "key": "temperature_compensation_coeff",
@@ -396,6 +413,7 @@ SWITCH_DEFINITIONS = {
         "readable": True,
         "writable": True,
         "entity_type": "switch",
+        "register_type": "holding",
     },
     0x0005: {
         "key": "enable_load_test",
@@ -417,6 +435,7 @@ BUTTON_DEFINITIONS = {
         "readable": True,
         "writable": True,
         "entity_type": "button",
+        "register_type": "holding",
     },
     0x0003: {
         "key": "force_load_on",
@@ -449,6 +468,7 @@ NUMBER_DEFINITIONS = [
         "unit": reg.get("unit", ""),
         "scale": reg.get("scale", 1),
         "precision": reg.get("precision", 0),
+        "register_type": reg.get("register_type", "holding"),
         "unique_id": f"epever_hi_number_{reg['key']}",
     }
     for addr, reg in REGISTER_DEFINITIONS.items()
@@ -464,6 +484,7 @@ SELECT_DEFINITIONS = {
         "dataLength": 1,
         "readable": True,
         "writable": True,
+        "register_type": "holding",
         "options": {
             1: "User Defined",
             2: "Sealed",
@@ -481,6 +502,7 @@ DIAGNOSTIC_DEFINITIONS = {
     0x3200: {
         "type": "uint16",
         "entity_category": EntityCategory.DIAGNOSTIC,
+        "register_type": "input",
         "bits": {
             0: {"key": "charging", "name": "Charging"},
             1: {"key": "charging_mppt", "name": "Charging MPPT"},
@@ -496,6 +518,7 @@ DIAGNOSTIC_DEFINITIONS = {
     0x3201: {
         "type": "uint16",
         "entity_category": EntityCategory.DIAGNOSTIC,
+        "register_type": "input",
         "bits": {
             0: {"key": "load_on", "name": "Load On"},
             1: {"key": "load_short_circuit", "name": "Load Short Circuit"},

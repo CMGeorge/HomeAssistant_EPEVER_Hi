@@ -29,7 +29,8 @@ async def async_setup_entry(
                 and not reg.get("entity_type") == "button"
             )
         ):
-            coordinator.register_address(addr)
+            reg_type = reg.get("register_type", "holding")
+            coordinator.register_address(addr, reg_type)
             selects.append(
                 EpeverHiModbusSelect(
                     coordinator=coordinator,
