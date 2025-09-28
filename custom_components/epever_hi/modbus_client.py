@@ -26,7 +26,7 @@ class EpeverHiModbusClient:
                 self.host,
                 port=self.port,
                 timeout=2.0,  # Shorter timeout to fail faster
-                retries=1     # Fewer retries to reduce log noise
+                retries=1,  # Fewer retries to reduce log noise
             )
 
         if not self.client.connected:
